@@ -155,7 +155,7 @@ The CorridorKey engine uses:
 
 - **CorridorKey model** by [Niko Pueringer / Corridor Digital](https://github.com/nikopueringer/CorridorKey) — CC BY-NC-SA 4.0
 - **TRTCorridorKey Nuke plugin** by [Peter Mercell](https://petermercell.com)
-- Built with [TensorRT](https://developer.nvidia.com/tensorrt) and the [Nuke NDK](https://learn.foundry.com/nuke/developers/latest/)
+- Built with [TensorRT](https://developer.nvidia.com/tensorrt) and the Nuke NDK
 
 ## License
 
